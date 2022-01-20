@@ -1,0 +1,34 @@
+name: Deploy staging
+on:
+  workflow_run:
+    workflows: ["Checks"]
+    branches: [main]
+    types:
+      - completed
+
+env:
+  GITHUB_USER: AifoSca
+
+jobs:
+  deploy:
+    name: Build and deploy latest image to ECR
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Get version
+        run: echo "::set-output name=VERSION::$(git rev-parse --short HEAD)"
+        id: version
+      - name: Change terragrunt file
+        run: |
+          find . -name '*.hcl' -exec sed -i 's/##COMMIT_SHA##/${{ steps.version.outputs.VERSION }}/g' {} \;
+      - name: Modify the files
+        uses: action-owner/action-repo@ref
+      - name: Commit and push changes
+        run: |
+          git config --global user.name "AifoSca"
+          git add -A
+          git commit -m "commit message"
+          git push
