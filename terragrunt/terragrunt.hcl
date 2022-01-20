@@ -10,6 +10,6 @@ include "root" {
 inputs = {
   name = "alpine"
 
-  image = "alpine:16ea309"
+  image = "alpine:9138e81"
 
 }
