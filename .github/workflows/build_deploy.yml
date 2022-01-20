@@ -18,7 +18,7 @@ jobs:
         id: version
       - name: Change terragrunt file
         run: |
-          find . -name '*.hcl' -exec sed -i 's/image = "alpine:[a-z0-9]*/image = "alpine:${{ steps.version.outputs.VERSION }}/g' {} \;
+          find ./terragrunt -name '*.hcl' -exec sed -i 's/image = "alpine:[a-z0-9]*/image = "alpine:${{ steps.version.outputs.VERSION }}/g' {} \;
       - name: Commit and push changes
         run: |
           git config --global user.name "AifoSca"
