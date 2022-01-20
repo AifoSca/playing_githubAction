@@ -10,6 +10,6 @@ include "root" {
 inputs = {
   name = "alpine"
 
-  image = "alpine:##COMMIT_SHA##"
+  image = "alpine:16ea309"
 
 }
