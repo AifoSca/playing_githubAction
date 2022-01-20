@@ -19,8 +19,6 @@ jobs:
       - name: Change terragrunt file
         run: |
           find . -name '*.hcl' -exec sed -i 's/##COMMIT_SHA##/${{ steps.version.outputs.VERSION }}/g' {} \;
-      - name: Modify the files
-        uses: action-owner/action-repo@ref
       - name: Commit and push changes
         run: |
           git config --global user.name "AifoSca"
